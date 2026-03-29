@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Money Mentor</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<section class="hero">
+    <h1>💰 AI Money Mentor</h1>
+    <p>Smart financial planning</p>
+</section>
+
+<!-- FIRE -->
+<div class="card">
+<h2>🔥 FIRE Planner</h2>
+
+<input id="income" placeholder="Income ₹">
+<input id="expenses" placeholder="Expenses ₹">
+<input id="goal" placeholder="Goal ₹">
+
+<button onclick="calculateFIRE()">Generate Plan</button>
+<p id="fireResult"></p>
+</div>
+
+<div class="card">
+<h2>📊 Money Health Score</h2>
+
+<input id="hIncome" placeholder="Income ₹">
+<input id="hExpenses" placeholder="Expenses ₹">
+<input id="hSavings" placeholder="Savings ₹">
+<input id="hDebt" placeholder="Debt ₹">
+<input id="hInsurance" placeholder="Insurance ₹">
+<canvas id="healthChart"></canvas>
+<button onclick="calculateHealth()">Check Score</button>
+<p id="healthResult"></p>
+</div>
+
+<div class="card">
+<h2>🎯 Life Event Advisor</h2>
+
+<select id="event">
+<option value="bonus">Bonus</option>
+<option value="marriage">Marriage</option>
+<option value="baby">Baby</option>
+<option value="inheritance">Inheritance</option>
+</select>
+
+<input id="amount" type="number" placeholder="Enter amount" />
+
+<button onclick="getAdvice()">Get Advice</button>
+
+<p id="lifeResult"></p>
+</div>
+
+<script>
+async function getAdvice() {
+  const event = document.getElementById("event").value;
+  const amount = document.getElementById("amount").value;
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/life", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        event: event,
+        amount: parseFloat(amount)
+      })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("lifeResult").innerText = data.advice;
+
+  } catch (error) {
+    document.getElementById("lifeResult").innerText = "Error ❌";
+    console.error(error);
+  }
+}
+</script>
+<!-- TAX -->
+<div class="card">
+<h2>🧾 Tax</h2>
+
+<input id="salary" placeholder="Salary ₹">
+<button onclick="calculateTax()">Calculate</button>
+<p id="taxResult"></p>
+</div>
+
+
+<!-- COUPLE -->
+<div class="card">
+<h2>💑 Couple</h2>
+
+<input id="p1" placeholder="Partner 1 Income">
+<input id="p2" placeholder="Partner 2 Income">
+<input id="exp" placeholder="Expenses">
+
+<button onclick="couplePlan()">Plan</button>
+<p id="coupleResult"></p>
+</div>
+
+<!-- MF -->
+<div class="card">
+<h2>📊 MF X-Ray</h2>
+
+<input id="invested" placeholder="Invested">
+<input id="current" placeholder="Current Value">
+<input id="years" placeholder="Years">
+
+<button onclick="mfXray()">Analyze</button>
+<p id="mfResult"></p>
+</div>
+<div class="card">
+<h2>🤖 AI Advisor</h2>
+
+<input id="chatInput" placeholder="Ask anything...">
+<button onclick="askAI()">Ask</button>
+
+<p id="chatResult"></p>
+</div>
+<script>
+async function getAdvice() {
+  const event = document.getElementById("event").value;
+  const amount = document.getElementById("amount").value;
+
+  const res = await fetch("http://127.0.0.1:8000/life", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      event: event,
+      amount: parseFloat(amount)
+    })
+  });
+
+  const data = await res.json();
+
+  console.log(data);
+
+  document.getElementById("result").innerText = data.advice;
+}
+</script>
+</body>
+</html>
